@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
+import { ClientStatusResponseDto } from 'src/application/dtos/client/client-status-response.dto';
 import { RegisterClientStatusDto } from 'src/application/dtos/client/register-client-status.dto';
-import { ClientStatusResponse } from 'src/application/types/client.type';
 import { IClientStatusRepository } from 'src/domain/repositories/client-status.repository';
 import { CLIENT_STATUS_REPOSITORY_TOKEN } from 'src/domain/repositories/repository-tokens';
 
@@ -13,7 +13,7 @@ export class RegisterClientStatusUseCase {
 
   async execute(
     registerStatusDto: RegisterClientStatusDto,
-  ): Promise<ClientStatusResponse> {
+  ): Promise<ClientStatusResponseDto> {
     const clientStatus =
       await this.clientStatusRepository.registerStatus(registerStatusDto);
 

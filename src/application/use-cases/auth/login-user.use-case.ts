@@ -1,7 +1,8 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { LoginUserResponseDto } from 'src/application/dtos/auth/login-user-response.dto';
 import { LoginUserDto } from 'src/application/dtos/auth/login-user.dto';
-import { LoginUserResponse, JWTPayload } from 'src/application/types/auth.type';
+import { JWTPayload } from 'src/application/types/auth.type';
 import { IAuthRepository } from 'src/domain/repositories/auth.repository';
 import { AUTH_REPOSITORY_TOKEN } from 'src/domain/repositories/repository-tokens';
 
@@ -13,7 +14,7 @@ export class LoginUserUseCase {
     private readonly jwtService: JwtService,
   ) {}
 
-  async execute(loginUserDto: LoginUserDto): Promise<LoginUserResponse> {
+  async execute(loginUserDto: LoginUserDto): Promise<LoginUserResponseDto> {
     const user = await this.authRepository.loginUser(loginUserDto);
 
     const payload: JWTPayload = {
@@ -23,7 +24,7 @@ export class LoginUserUseCase {
     };
 
     const accessToken = this.jwtService.sign(payload);
-    const loginUserResponse: LoginUserResponse = { accessToken };
+    const loginUserResponse: LoginUserResponseDto = { accessToken };
 
     return loginUserResponse;
   }

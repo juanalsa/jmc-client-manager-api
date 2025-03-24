@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { ClientStatusResponse } from 'src/application/types/client.type';
+import { ClientStatusResponseDto } from 'src/application/dtos/client/client-status-response.dto';
 import { IClientStatusRepository } from 'src/domain/repositories/client-status.repository';
 import { CLIENT_STATUS_REPOSITORY_TOKEN } from 'src/domain/repositories/repository-tokens';
 
@@ -10,7 +10,7 @@ export class GetActiveClientStatusUseCase {
     private readonly clientStatusRepository: IClientStatusRepository,
   ) {}
 
-  async execute(): Promise<ClientStatusResponse[]> {
+  async execute(): Promise<ClientStatusResponseDto[]> {
     const clientStatus =
       await this.clientStatusRepository.getActiveClientStatus();
     return clientStatus.map((status) => ({
