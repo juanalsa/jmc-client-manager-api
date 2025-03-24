@@ -13,11 +13,15 @@ import { ClientStatusEntity } from 'src/infrastructure/database/entities/client/
 import { ClientEntity } from 'src/infrastructure/database/entities/client/client.entity';
 import { ClientStatusRepositoryImpl } from 'src/infrastructure/persistence/client-status.repository.impl';
 import { ClientRepositoryImpl } from 'src/infrastructure/persistence/client.repository.impl';
+import { AuthModule } from '../auth/auth.module';
 import { ClientStatusController } from './client-status.controller';
 import { ClientController } from './client.controller';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([ClientEntity, ClientStatusEntity])],
+  imports: [
+    TypeOrmModule.forFeature([ClientEntity, ClientStatusEntity]),
+    AuthModule,
+  ],
   controllers: [ClientController, ClientStatusController],
   providers: [
     RegisterClientUseCase,

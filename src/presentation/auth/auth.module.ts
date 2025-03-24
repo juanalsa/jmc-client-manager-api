@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { LoginUserUseCase } from 'src/application/use-cases/auth/login-user.use-case';
 import { AUTH_REPOSITORY_TOKEN } from 'src/domain/repositories/repository-tokens';
 import { UserEntity } from 'src/infrastructure/database/entities/auth/user.entity';
+import { JwtAuthGuard } from 'src/infrastructure/http/guards/jwt-auth.guard';
 import { AuthRepositoryImpl } from 'src/infrastructure/persistence/auth.repository.impl';
 import { BcryptAdapter } from 'src/infrastructure/security/adapters/bcrypt.adapter';
 import { AuthController } from './auth.controller';
@@ -19,6 +20,7 @@ import { AuthController } from './auth.controller';
   controllers: [AuthController],
   providers: [
     LoginUserUseCase,
+    JwtAuthGuard,
     {
       provide: AUTH_REPOSITORY_TOKEN,
       useClass: AuthRepositoryImpl,
@@ -29,6 +31,6 @@ import { AuthController } from './auth.controller';
         BcryptAdapter.compare(password, hashed),
     },
   ],
-  exports: [AUTH_REPOSITORY_TOKEN],
+  exports: [JwtModule, JwtAuthGuard, AUTH_REPOSITORY_TOKEN],
 })
 export class AuthModule {}
