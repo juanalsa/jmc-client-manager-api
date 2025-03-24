@@ -8,7 +8,7 @@ export class Migration1742715950148 implements MigrationInterface {
       `CREATE TABLE "user" ("id" SERIAL NOT NULL, "username" character varying NOT NULL, "password" character varying NOT NULL, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "roleId" integer, CONSTRAINT "UQ_78a916df40e02a9deb1c4b75edb" UNIQUE ("username"), CONSTRAINT "PK_cace4a159ff9f2512dd42373760" PRIMARY KEY ("id"))`,
     );
     await queryRunner.query(
-      `INSERT INTO "user" ("username", "password", "roleId", "createdAt", "updatedAt") VALUES ('jmc-admin', 'dGVzdDEyMzQ=', 1, NOW(), NOW()), ('jmc-support', 'dGVzdDQzMjE=', 2, NOW(), NOW())`,
+      `INSERT INTO "user" ("username", "password", "roleId", "createdAt", "updatedAt") VALUES ('jmc-admin', '$2a$12$f0BgNAocIKHj/dR/zdNJleF5uJQmT1lq/njXRWftU834sDBezusHy', 1, NOW(), NOW()), ('jmc-support', '$2a$12$Gntq4dBK85T.FL/2knx9reYC6BW98h9lVMOpC8X8SaO.HYlWM3vcO', 2, NOW(), NOW())`,
     );
     await queryRunner.query(
       `CREATE TABLE "role" ("id" SERIAL NOT NULL, "name" character varying NOT NULL, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), CONSTRAINT "UQ_ae4578dcaed5adff96595e61660" UNIQUE ("name"), CONSTRAINT "PK_b36bcfe02fc8de3c57a8b2391c2" PRIMARY KEY ("id"))`,
