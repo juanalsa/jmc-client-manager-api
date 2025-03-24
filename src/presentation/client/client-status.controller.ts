@@ -1,9 +1,11 @@
-import { Body, Controller, Get, Post } from '@nestjs/common/decorators';
+import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { RegisterClientStatusDto } from 'src/application/dtos/client/register-client-status.dto';
 import { ClientStatusResponse } from 'src/application/types/client.type';
 import { GetActiveClientStatusUseCase } from 'src/application/use-cases/client/get-all-client-status.use-case';
 import { RegisterClientStatusUseCase } from 'src/application/use-cases/client/register-client-status.use-case';
+import { JwtAuthGuard } from 'src/infrastructure/http/guards/jwt-auth.guard';
 
+@UseGuards(JwtAuthGuard)
 @Controller('client-status')
 export class ClientStatusController {
   constructor(
