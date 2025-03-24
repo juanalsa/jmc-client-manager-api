@@ -1,6 +1,6 @@
-import { DataSource } from 'typeorm';
 import { ConfigService } from '@nestjs/config';
 import { config } from 'dotenv';
+import { DataSource } from 'typeorm';
 config();
 
 const configService = new ConfigService();
@@ -18,5 +18,15 @@ const AppDataSource = new DataSource({
   migrationsRun: false,
   logging: true,
 });
+
+AppDataSource.initialize()
+  .then(() => {
+    console.log('Data Source has been initialized!');
+  })
+  .catch((err) => {
+    console.error('Error during Data Source initialization', err);
+  });
+
+console.log(AppDataSource);
 
 export default AppDataSource;
