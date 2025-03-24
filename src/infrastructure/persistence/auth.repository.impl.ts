@@ -7,7 +7,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { LoginUserDto } from 'src/application/dtos/auth/login-user.dto';
-import { User } from 'src/domain/entities/auth/user.entity';
+import { UserEntity } from 'src/infrastructure/database/entities/auth/user.entity';
 import { IAuthRepository } from 'src/domain/repositories/auth.repository';
 import { Repository } from 'typeorm';
 
@@ -16,13 +16,13 @@ type CompareFunction = (password: string, hashed: string) => boolean;
 @Injectable()
 export class AuthRepositoryImpl implements IAuthRepository {
   constructor(
-    @InjectRepository(User)
-    private readonly userRepository: Repository<User>,
+    @InjectRepository(UserEntity)
+    private readonly userRepository: Repository<UserEntity>,
     @Inject('ComparePassword')
     private readonly comparePassword: CompareFunction,
   ) {}
 
-  async login(loginUserDto: LoginUserDto): Promise<User> {
+  async login(loginUserDto: LoginUserDto): Promise<UserEntity> {
     const { username, password } = loginUserDto;
 
     try {

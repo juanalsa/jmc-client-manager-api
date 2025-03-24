@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { LoginUserUseCase } from 'src/application/use-cases/auth/login-user.use-case';
-import { User } from 'src/domain/entities/auth/user.entity';
+import { UserEntity } from 'src/infrastructure/database/entities/auth/user.entity';
 import { AUTH_REPOSITORY_TOKEN } from 'src/domain/repositories/auth.repository.token';
 import { AuthRepositoryImpl } from 'src/infrastructure/persistence/auth.repository.impl';
 import { BcryptAdapter } from 'src/infrastructure/security/adapters/bcrypt.adapter';
@@ -11,7 +11,7 @@ import { AuthService } from './auth.service';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User]),
+    TypeOrmModule.forFeature([UserEntity]),
     JwtModule.register({
       secret: process.env.JWT_SECRET,
       signOptions: { expiresIn: '1h' },
