@@ -23,7 +23,7 @@ export class AuthRepositoryImpl implements IAuthRepository {
     private readonly comparePassword: CompareFunction,
   ) {}
 
-  async login(loginUserDto: LoginUserDto): Promise<User> {
+  async loginUser(loginUserDto: LoginUserDto): Promise<User> {
     const { username, password } = loginUserDto;
 
     try {
