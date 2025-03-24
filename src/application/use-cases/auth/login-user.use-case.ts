@@ -3,7 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 import { LoginUserDto } from 'src/application/dtos/auth/login-user.dto';
 import { LoginUserResponse, Payload } from 'src/application/types/auth.type';
 import { IAuthRepository } from 'src/domain/repositories/auth.repository';
-import { AUTH_REPOSITORY_TOKEN } from 'src/domain/repositories/auth.repository.token';
+import { AUTH_REPOSITORY_TOKEN } from 'src/domain/repositories/repository-tokens';
 
 @Injectable()
 export class LoginUserUseCase {
@@ -14,7 +14,7 @@ export class LoginUserUseCase {
   ) {}
 
   async execute(loginUserDto: LoginUserDto): Promise<LoginUserResponse> {
-    const user = await this.authRepository.login(loginUserDto);
+    const user = await this.authRepository.loginUser(loginUserDto);
 
     const payload: Payload = {
       sub: user.id,
