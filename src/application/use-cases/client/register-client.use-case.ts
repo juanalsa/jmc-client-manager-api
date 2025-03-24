@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
+import { ClientResponseDto } from 'src/application/dtos/client/client-response.dto';
 import { RegisterClientDto } from 'src/application/dtos/client/register-client.dto';
-import { ClientResponse } from 'src/application/types/client.type';
 import { IClientRepository } from 'src/domain/repositories/client.repository';
 import { CLIENT_REPOSITORY_TOKEN } from 'src/domain/repositories/repository-tokens';
 
@@ -11,7 +11,7 @@ export class RegisterClientUseCase {
     private readonly clientRepository: IClientRepository,
   ) {}
 
-  async execute(registerClientDto: RegisterClientDto): Promise<ClientResponse> {
+  async execute(registerClientDto: RegisterClientDto): Promise<ClientResponseDto> {
     const client =
       await this.clientRepository.registerClient(registerClientDto);
 

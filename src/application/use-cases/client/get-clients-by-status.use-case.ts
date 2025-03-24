@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { GetClientsResponse } from 'src/application/types/client.type';
+import { GetClientsResponseDto } from 'src/application/dtos/client/get-clients-response.dto';
 import { IClientRepository } from 'src/domain/repositories/client.repository';
 import { CLIENT_REPOSITORY_TOKEN } from 'src/domain/repositories/repository-tokens';
 
@@ -10,7 +10,7 @@ export class GetClientsByStatusUseCase {
     private readonly clientRepository: IClientRepository,
   ) {}
 
-  async execute(statusId: number): Promise<GetClientsResponse> {
+  async execute(statusId: number): Promise<GetClientsResponseDto> {
     const [clients, clientsCount] =
       await this.clientRepository.getClientsByStatus(statusId);
 
