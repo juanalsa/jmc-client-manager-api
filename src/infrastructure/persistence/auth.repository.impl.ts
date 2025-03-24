@@ -7,8 +7,9 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { LoginUserDto } from 'src/application/dtos/auth/login-user.dto';
-import { UserEntity } from 'src/infrastructure/database/entities/auth/user.entity';
+import { User } from 'src/domain/model/auth/user.model';
 import { IAuthRepository } from 'src/domain/repositories/auth.repository';
+import { UserEntity } from 'src/infrastructure/database/entities/auth/user.entity';
 import { Repository } from 'typeorm';
 
 type CompareFunction = (password: string, hashed: string) => boolean;
@@ -22,26 +23,29 @@ export class AuthRepositoryImpl implements IAuthRepository {
     private readonly comparePassword: CompareFunction,
   ) {}
 
-  async login(loginUserDto: LoginUserDto): Promise<UserEntity> {
+  async login(loginUserDto: LoginUserDto): Promise<User> {
     const { username, password } = loginUserDto;
 
     try {
-      const user = await this.userRepository.findOne({
+      const userEntity = await this.userRepository.findOne({
         where: { username },
         relations: ['role'],
       });
 
-      if (!user) {
+      if (!userEntity) {
         throw new NotFoundException('User not found');
       }
 
-      const isPasswordValid = this.comparePassword(password, user.password);
+      const isPasswordValid = this.comparePassword(
+        password,
+        userEntity.password,
+      );
 
       if (!isPasswordValid) {
         throw new UnauthorizedException('Invalid credentials');
       }
 
-      return user;
+      return userEntity.toModel();
     } catch (error) {
       if (
         error instanceof NotFoundException ||

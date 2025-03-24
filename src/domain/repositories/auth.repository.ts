@@ -1,6 +1,6 @@
 import { LoginUserDto } from '../../application/dtos/auth/login-user.dto';
-import { UserEntity } from '../../infrastructure/database/entities/auth/user.entity';
+import { User } from '../model/auth/user.model';
 
 export interface IAuthRepository {
-  login(loginUserDto: LoginUserDto): Promise<UserEntity>;
+  login(loginUserDto: LoginUserDto): Promise<User>;
 }

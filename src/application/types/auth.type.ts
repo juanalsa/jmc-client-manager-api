@@ -5,5 +5,5 @@ export type LoginUserResponse = {
 export type Payload = {
   sub: number;
   username: string;
-  role: string;
+  role: number;
 };
